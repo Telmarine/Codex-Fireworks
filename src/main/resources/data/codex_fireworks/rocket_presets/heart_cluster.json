@@ -1,0 +1,79 @@
+{
+  "name": "Heart Cluster",
+  "flight": 2,
+  "scale": 1.5,
+  "bursts": [
+    {
+      "shape": "heart",
+      "colors": [
+        "red",
+        "pink"
+      ],
+      "size": 1.3
+    },
+    {
+      "shape": "heart",
+      "colors": [
+        "red",
+        "pink"
+      ],
+      "size": 0.5,
+      "dx": 7.0,
+      "delay": 6
+    },
+    {
+      "shape": "heart",
+      "colors": [
+        "pink",
+        "magenta"
+      ],
+      "size": 0.5,
+      "dx": 3.5,
+      "dy": 6.06,
+      "delay": 6
+    },
+    {
+      "shape": "heart",
+      "colors": [
+        "red",
+        "pink"
+      ],
+      "size": 0.5,
+      "dx": -3.5,
+      "dy": 6.06,
+      "delay": 6
+    },
+    {
+      "shape": "heart",
+      "colors": [
+        "pink",
+        "magenta"
+      ],
+      "size": 0.5,
+      "dx": -7.0,
+      "delay": 6
+    },
+    {
+      "shape": "heart",
+      "colors": [
+        "red",
+        "pink"
+      ],
+      "size": 0.5,
+      "dx": -3.5,
+      "dy": -6.06,
+      "delay": 6
+    },
+    {
+      "shape": "heart",
+      "colors": [
+        "pink",
+        "magenta"
+      ],
+      "size": 0.5,
+      "dx": 3.5,
+      "dy": -6.06,
+      "delay": 6
+    }
+  ]
+}

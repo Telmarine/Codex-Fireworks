@@ -1,0 +1,16 @@
+# Codex: Fireworks messages.
+# & color codes (&a, &l, &#FFD700). {placeholders} are filled in. "" turns a line off.
+# Reload with /fireworks reload.
+
+[general]
+prefix = "&8[&6Fireworks&8] "
+
+[cmd]
+reloaded = "{prefix}&7Reloaded. &e{presets} &7rocket preset(s), &e{guarded} &7feature(s) turned off by the overlap guard."
+off = "{prefix}&cCodex: Fireworks is turned off in features.toml."
+
+[give]
+done = "{prefix}&7Gave &e{amount}x {rocket} &7to &e{players}&7."
+unknown = "{prefix}&cNo rocket preset called &e{id}&c."
+presets_off = "{prefix}&cRocket presets are turned off in features.toml."
+shape_off = "{prefix}&c{rocket} uses a shape that's turned off: &e{shape}&c."

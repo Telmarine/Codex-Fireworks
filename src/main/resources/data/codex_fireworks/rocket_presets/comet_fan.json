@@ -1,0 +1,54 @@
+{
+  "name": "Comet Fan",
+  "flight": 2,
+  "scale": 1.5,
+  "bursts": [
+    {
+      "shape": "comet",
+      "colors": [
+        "#FFF2B3",
+        "#FFD700"
+      ],
+      "dx": -8,
+      "dy": -2
+    },
+    {
+      "shape": "comet",
+      "colors": [
+        "#FFF2B3",
+        "#FFD700"
+      ],
+      "dx": -4,
+      "dy": -1,
+      "delay": 2
+    },
+    {
+      "shape": "comet",
+      "colors": [
+        "#FFF2B3",
+        "#FFD700"
+      ],
+      "delay": 4
+    },
+    {
+      "shape": "comet",
+      "colors": [
+        "#FFF2B3",
+        "#FFD700"
+      ],
+      "dx": 4,
+      "dy": -1,
+      "delay": 6
+    },
+    {
+      "shape": "comet",
+      "colors": [
+        "#FFF2B3",
+        "#FFD700"
+      ],
+      "dx": 8,
+      "dy": -2,
+      "delay": 8
+    }
+  ]
+}

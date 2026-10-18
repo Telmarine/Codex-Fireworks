@@ -1,0 +1,20 @@
+{
+  "tooltip.codex_fireworks.flight": "Flight: %s",
+  "tooltip.codex_fireworks.bursts": "Bursts: %s",
+  "tooltip.codex_fireworks.shapes": "Shapes: %s",
+
+  "shape.codex_fireworks.peony": "Peony",
+  "shape.codex_fireworks.chrysanthemum": "Chrysanthemum",
+  "shape.codex_fireworks.willow": "Willow",
+  "shape.codex_fireworks.palm": "Palm",
+  "shape.codex_fireworks.ring": "Ring",
+  "shape.codex_fireworks.double_ring": "Double Ring",
+  "shape.codex_fireworks.heart": "Heart",
+  "shape.codex_fireworks.spiral": "Spiral",
+  "shape.codex_fireworks.crossette": "Crossette",
+  "shape.codex_fireworks.crackle": "Crackle",
+  "shape.codex_fireworks.strobe": "Strobe",
+  "shape.codex_fireworks.comet": "Comet",
+  "shape.codex_fireworks.fish": "Fish",
+  "shape.codex_fireworks.brocade": "Brocade"
+}

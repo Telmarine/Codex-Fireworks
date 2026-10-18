@@ -1,0 +1,41 @@
+{
+  "name": "Spiral Tower",
+  "flight": 2,
+  "scale": 1.5,
+  "bursts": [
+    {
+      "shape": "spiral",
+      "colors": [
+        "cyan",
+        "white"
+      ]
+    },
+    {
+      "shape": "spiral",
+      "colors": [
+        "purple",
+        "magenta"
+      ],
+      "dy": 4,
+      "delay": 6
+    },
+    {
+      "shape": "spiral",
+      "colors": [
+        "cyan",
+        "white"
+      ],
+      "dy": 8,
+      "delay": 12
+    },
+    {
+      "shape": "spiral",
+      "colors": [
+        "purple",
+        "magenta"
+      ],
+      "dy": 12,
+      "delay": 18
+    }
+  ]
+}

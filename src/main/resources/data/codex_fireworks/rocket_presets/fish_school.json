@@ -1,0 +1,75 @@
+{
+  "name": "Fish School",
+  "flight": 2,
+  "scale": 1.5,
+  "bursts": [
+    {
+      "shape": "fish",
+      "colors": [
+        "light_blue",
+        "cyan",
+        "white"
+      ],
+      "size": 0.8,
+      "dx": -10.0
+    },
+    {
+      "shape": "fish",
+      "colors": [
+        "light_blue",
+        "cyan",
+        "white"
+      ],
+      "size": 0.8,
+      "dx": -6.0,
+      "dy": 2,
+      "delay": 2
+    },
+    {
+      "shape": "fish",
+      "colors": [
+        "light_blue",
+        "cyan",
+        "white"
+      ],
+      "size": 0.8,
+      "dx": -2.0,
+      "delay": 4
+    },
+    {
+      "shape": "fish",
+      "colors": [
+        "light_blue",
+        "cyan",
+        "white"
+      ],
+      "size": 0.8,
+      "dx": 2.0,
+      "dy": 2,
+      "delay": 6
+    },
+    {
+      "shape": "fish",
+      "colors": [
+        "light_blue",
+        "cyan",
+        "white"
+      ],
+      "size": 0.8,
+      "dx": 6.0,
+      "delay": 8
+    },
+    {
+      "shape": "fish",
+      "colors": [
+        "light_blue",
+        "cyan",
+        "white"
+      ],
+      "size": 0.8,
+      "dx": 10.0,
+      "dy": 2,
+      "delay": 10
+    }
+  ]
+}

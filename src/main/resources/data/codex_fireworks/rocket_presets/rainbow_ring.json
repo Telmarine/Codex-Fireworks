@@ -1,0 +1,61 @@
+{
+  "name": "Rainbow Ring",
+  "flight": 2,
+  "scale": 1.5,
+  "bursts": [
+    {
+      "shape": "ring",
+      "colors": [
+        "red"
+      ],
+      "dy": -9
+    },
+    {
+      "shape": "ring",
+      "colors": [
+        "orange"
+      ],
+      "dy": -6,
+      "delay": 4
+    },
+    {
+      "shape": "ring",
+      "colors": [
+        "yellow"
+      ],
+      "dy": -3,
+      "delay": 8
+    },
+    {
+      "shape": "ring",
+      "colors": [
+        "lime"
+      ],
+      "delay": 12
+    },
+    {
+      "shape": "ring",
+      "colors": [
+        "light_blue"
+      ],
+      "dy": 3,
+      "delay": 16
+    },
+    {
+      "shape": "ring",
+      "colors": [
+        "blue"
+      ],
+      "dy": 6,
+      "delay": 20
+    },
+    {
+      "shape": "ring",
+      "colors": [
+        "purple"
+      ],
+      "dy": 9,
+      "delay": 24
+    }
+  ]
+}

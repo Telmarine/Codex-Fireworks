@@ -1,0 +1,18 @@
+{
+  "name": "Golden Willow",
+  "flight": 3,
+  "scale": 1.5,
+  "bursts": [
+    {
+      "shape": "willow",
+      "colors": [
+        "#FFC83D",
+        "#FFD700"
+      ],
+      "fades": [
+        "#B5651D"
+      ],
+      "size": 1.4
+    }
+  ]
+}

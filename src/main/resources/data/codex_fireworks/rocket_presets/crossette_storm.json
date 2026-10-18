@@ -1,0 +1,50 @@
+{
+  "name": "Crossette Storm",
+  "flight": 2,
+  "scale": 1.5,
+  "bursts": [
+    {
+      "shape": "peony",
+      "colors": [
+        "white",
+        "#FFE680"
+      ]
+    },
+    {
+      "shape": "crossette",
+      "colors": [
+        "#FFE680",
+        "orange"
+      ],
+      "dx": 5,
+      "delay": 10
+    },
+    {
+      "shape": "crossette",
+      "colors": [
+        "#FFE680",
+        "orange"
+      ],
+      "dx": -5,
+      "delay": 10
+    },
+    {
+      "shape": "crossette",
+      "colors": [
+        "#FFE680",
+        "orange"
+      ],
+      "dz": 5,
+      "delay": 10
+    },
+    {
+      "shape": "crossette",
+      "colors": [
+        "#FFE680",
+        "orange"
+      ],
+      "dz": -5,
+      "delay": 10
+    }
+  ]
+}

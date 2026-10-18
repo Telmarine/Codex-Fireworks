@@ -1,0 +1,26 @@
+{
+  "name": "Chrysanthemum Bloom",
+  "flight": 2,
+  "scale": 1.5,
+  "bursts": [
+    {
+      "shape": "chrysanthemum",
+      "colors": [
+        "magenta",
+        "pink"
+      ],
+      "fades": [
+        "white"
+      ],
+      "size": 1.2
+    },
+    {
+      "shape": "brocade",
+      "colors": [
+        "#FFD27A"
+      ],
+      "size": 0.9,
+      "delay": 14
+    }
+  ]
+}

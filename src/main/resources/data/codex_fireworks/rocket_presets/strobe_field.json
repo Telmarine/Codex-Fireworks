@@ -1,0 +1,91 @@
+{
+  "name": "Strobe Field",
+  "flight": 2,
+  "scale": 1.5,
+  "bursts": [
+    {
+      "shape": "peony",
+      "colors": [
+        "light_blue",
+        "white"
+      ]
+    },
+    {
+      "shape": "strobe",
+      "colors": [
+        "white"
+      ],
+      "size": 0.6,
+      "dx": 2,
+      "dy": -3,
+      "dz": 4,
+      "delay": 12
+    },
+    {
+      "shape": "strobe",
+      "colors": [
+        "white"
+      ],
+      "size": 0.6,
+      "dx": -7,
+      "dy": -4,
+      "dz": -5,
+      "delay": 15
+    },
+    {
+      "shape": "strobe",
+      "colors": [
+        "white"
+      ],
+      "size": 0.6,
+      "dx": 3,
+      "dy": 4,
+      "dz": -7,
+      "delay": 18
+    },
+    {
+      "shape": "strobe",
+      "colors": [
+        "white"
+      ],
+      "size": 0.6,
+      "dx": 8,
+      "dy": -2,
+      "dz": -7,
+      "delay": 21
+    },
+    {
+      "shape": "strobe",
+      "colors": [
+        "white"
+      ],
+      "size": 0.6,
+      "dx": -6,
+      "dy": 1,
+      "dz": 5,
+      "delay": 24
+    },
+    {
+      "shape": "strobe",
+      "colors": [
+        "white"
+      ],
+      "size": 0.6,
+      "dx": -6,
+      "dy": -2,
+      "dz": -6,
+      "delay": 27
+    },
+    {
+      "shape": "strobe",
+      "colors": [
+        "white"
+      ],
+      "size": 0.6,
+      "dx": 5,
+      "dy": -5,
+      "dz": -5,
+      "delay": 30
+    }
+  ]
+}

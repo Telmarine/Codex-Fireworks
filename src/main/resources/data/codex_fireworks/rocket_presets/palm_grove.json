@@ -1,0 +1,41 @@
+{
+  "name": "Palm Grove",
+  "flight": 3,
+  "scale": 1.5,
+  "bursts": [
+    {
+      "shape": "palm",
+      "colors": [
+        "#FFC83D"
+      ],
+      "fades": [
+        "green"
+      ],
+      "size": 1.1,
+      "dx": -8
+    },
+    {
+      "shape": "palm",
+      "colors": [
+        "#FFC83D"
+      ],
+      "fades": [
+        "green"
+      ],
+      "size": 1.1,
+      "delay": 5
+    },
+    {
+      "shape": "palm",
+      "colors": [
+        "#FFC83D"
+      ],
+      "fades": [
+        "green"
+      ],
+      "size": 1.1,
+      "dx": 8,
+      "delay": 10
+    }
+  ]
+}

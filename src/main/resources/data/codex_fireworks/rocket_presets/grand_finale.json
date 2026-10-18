@@ -1,0 +1,82 @@
+{
+  "name": "Grand Finale",
+  "flight": 3,
+  "scale": 1.5,
+  "bursts": [
+    {
+      "shape": "willow",
+      "colors": [
+        "#FFC83D"
+      ],
+      "fades": [
+        "#B5651D"
+      ],
+      "size": 1.4
+    },
+    {
+      "shape": "crossette",
+      "colors": [
+        "white",
+        "#FFE680"
+      ],
+      "dx": 6,
+      "delay": 4
+    },
+    {
+      "shape": "crossette",
+      "colors": [
+        "white",
+        "#FFE680"
+      ],
+      "dx": -6,
+      "delay": 4
+    },
+    {
+      "shape": "crackle",
+      "colors": [
+        "#FFE6A0"
+      ],
+      "dy": 4,
+      "delay": 8
+    },
+    {
+      "shape": "ring",
+      "colors": [
+        "red",
+        "white"
+      ],
+      "size": 1.2,
+      "dy": 6,
+      "delay": 12
+    },
+    {
+      "shape": "strobe",
+      "colors": [
+        "white"
+      ],
+      "size": 0.7,
+      "dx": -5,
+      "dy": 8,
+      "delay": 16
+    },
+    {
+      "shape": "strobe",
+      "colors": [
+        "white"
+      ],
+      "size": 0.7,
+      "dx": 5,
+      "dy": 8,
+      "delay": 16
+    },
+    {
+      "shape": "brocade",
+      "colors": [
+        "#FFD27A"
+      ],
+      "size": 1.3,
+      "dy": 2,
+      "delay": 20
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "Triple Break",
+  "flight": 3,
+  "scale": 1.5,
+  "bursts": [
+    {
+      "shape": "peony",
+      "colors": [
+        "blue",
+        "light_blue"
+      ]
+    },
+    {
+      "shape": "ring",
+      "colors": [
+        "white",
+        "yellow"
+      ],
+      "dy": 5,
+      "delay": 10
+    },
+    {
+      "shape": "crackle",
+      "colors": [
+        "#FFE6A0"
+      ],
+      "dy": 10,
+      "delay": 20
+    }
+  ]
+}
