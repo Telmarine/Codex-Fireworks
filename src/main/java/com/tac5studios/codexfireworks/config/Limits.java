@@ -3,8 +3,11 @@ package com.tac5studios.codexfireworks.config;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
 import net.neoforged.neoforge.common.ModConfigSpec.DoubleValue;
 import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
+
+import java.util.List;
 
 /**
  * Server limits: config/codex_fireworks/limits.toml
@@ -23,8 +26,14 @@ public final class Limits {
     public static final IntValue MAX_DELAY;
     public static final IntValue MAX_OFFSET;
 
+    // [workbench]
+    public static final IntValue PRESET_GUNPOWDER;
+
     // [patterns]
     public static final IntValue MAX_PATTERN_SPARKS;
+
+    // [mystery]
+    public static final ConfigValue<List<? extends String>> MYSTERY_POOL;
 
     // [shows]
     public static final IntValue MAX_LAUNCHERS;
@@ -53,9 +62,21 @@ public final class Limits {
                 .defineInRange("max_offset_blocks", 12, 0, 32);
         b.pop();
 
+        b.push("workbench");
+        PRESET_GUNPOWDER = b.comment("Extra gunpowder per burst when a rocket preset is made in the Firework Workbench.",
+                        "Making a preset always takes 1 paper and 1-3 gunpowder for the flight, plus this per burst.")
+                .defineInRange("preset_gunpowder_per_burst", 1, 0, 8);
+        b.pop();
+
         b.push("patterns");
         MAX_PATTERN_SPARKS = b.comment("Most lit pixels (sparks) in one drawn pattern. The grid is 16x16 = 256.")
                 .defineInRange("max_sparks", 256, 16, 256);
+        b.pop();
+
+        b.push("mystery");
+        MYSTERY_POOL = b.comment("Rocket presets a Mystery Rocket can turn into, e.g. [\"golden_willow\", \"grand_finale\"].",
+                        "Empty = every rocket preset that's loaded.")
+                .defineListAllowEmpty("pool", List.of(), () -> "", o -> o instanceof String);
         b.pop();
 
         b.push("shows");

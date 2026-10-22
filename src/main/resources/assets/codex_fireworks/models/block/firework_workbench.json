@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "codex_fireworks:block/firework_workbench_side",
+    "down": "minecraft:block/oak_planks",
+    "up": "codex_fireworks:block/firework_workbench_top",
+    "north": "codex_fireworks:block/firework_workbench_front",
+    "south": "codex_fireworks:block/firework_workbench_front",
+    "east": "codex_fireworks:block/firework_workbench_side",
+    "west": "codex_fireworks:block/firework_workbench_side"
+  }
+}

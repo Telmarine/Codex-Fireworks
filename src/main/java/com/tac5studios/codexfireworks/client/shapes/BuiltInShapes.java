@@ -5,7 +5,7 @@ import com.tac5studios.codexfireworks.shell.Shape;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * Drawing code for the 14 built-in shapes. Every shape works the same way: sparks start at the
+ * Drawing code for the 14 built-in shapes (drawn patterns are in PatternShape). Every shape works the same way: sparks start at the
  * burst center with a velocity, and drag slows them down so they settle into the shape.
  * The distance a spark travels is roughly speed / (1 - drag).
  */
@@ -31,6 +31,7 @@ public final class BuiltInShapes {
             case COMET -> comet(c);
             case FISH -> fish(c);
             case BROCADE -> brocade(c);
+            case PATTERN -> PatternShape.draw(c);
         }
     }
 

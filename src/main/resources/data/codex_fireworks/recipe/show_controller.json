@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "C": {
+      "item": "minecraft:clock"
+    },
+    "L": {
+      "item": "codex_fireworks:launcher"
+    }
+  },
+  "pattern": [
+    "RCR",
+    "RLR"
+  ],
+  "result": {
+    "id": "codex_fireworks:show_controller",
+    "count": 1
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "codex_fireworks:block/show_controller"
+    }
+  }
+}

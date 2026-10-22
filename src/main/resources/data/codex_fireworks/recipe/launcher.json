@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "G": {
+      "item": "minecraft:gunpowder"
+    },
+    "D": {
+      "item": "minecraft:dispenser"
+    }
+  },
+  "pattern": [
+    "IGI",
+    "IDI",
+    "III"
+  ],
+  "result": {
+    "id": "codex_fireworks:launcher",
+    "count": 1
+  }
+}

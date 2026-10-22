@@ -1,0 +1,25 @@
+{
+  "name": "Smiley",
+  "rows": [
+    "................",
+    ".....oooooo.....",
+    "...oyyyyyyyyo...",
+    "..oyyyyyyyyyyo..",
+    ".oyyyyyyyyyyyyo.",
+    ".oyyy..yy..yyyo.",
+    "oyyyy..yy..yyyyo",
+    "oyyyyyyyyyyyyyyo",
+    "oyyyyyyyyyyyyyyo",
+    "oyy.yyyyyyyy.yyo",
+    "oyyy.yyyyyy.yyyo",
+    ".oyyy......yyyo.",
+    ".oyyyyyyyyyyyyo.",
+    "..oyyyyyyyyyyo..",
+    "...oyyyyyyyyo...",
+    ".....oooooo....."
+  ],
+  "colors": {
+    "y": "yellow",
+    "o": "orange"
+  }
+}

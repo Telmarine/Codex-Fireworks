@@ -1,0 +1,25 @@
+{
+  "name": "Star",
+  "rows": [
+    ".......yy.......",
+    ".......yy.......",
+    "......yyyy......",
+    "......ywwy......",
+    ".....yywwyy.....",
+    "yyyyyyywwyyyyyyy",
+    ".yyyywwwwwwyyyy.",
+    "...yyywwwwyyy...",
+    "....yyywwyyy....",
+    "....yyyyyyyy....",
+    "...yyyy..yyyy...",
+    "...yyy....yyy...",
+    "..yyy......yyy..",
+    "..yy........yy..",
+    ".yy..........yy.",
+    "................"
+  ],
+  "colors": {
+    "y": "yellow",
+    "w": "#FFF6C8"
+  }
+}

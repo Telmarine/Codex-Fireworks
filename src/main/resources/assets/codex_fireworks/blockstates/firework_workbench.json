@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "codex_fireworks:block/firework_workbench"
+    }
+  }
+}

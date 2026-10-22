@@ -16,24 +16,31 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Everything this mod adds to a firework rocket: the list of bursts and the rocket's own scale
- * (1.0 = normal; multiplies spread, offsets and spark size on top of the server's burst_scale).
+ * Everything this mod adds to a firework rocket: the list of bursts, the rocket's own scale
+ * (1.0 = normal; multiplies spread, offsets and spark size on top of the server's burst_scale)
+ * and its rarity tag ("common", "rare", "epic", or "" for none).
  *
  * <p>It's stored inside the rocket's vanilla custom_data, under the key "codex_fireworks".
  * The rocket also keeps normal vanilla stars in its fireworks data, so it still flies and pops
  * where the mod isn't installed or is turned off, and removing the mod never breaks the item.
  */
-public record Shell(List<Burst> bursts, float scale) {
+public record Shell(List<Burst> bursts, float scale, String rarity) {
 
     public static final String KEY = "codex_fireworks";
 
     public static final Codec<Shell> CODEC = RecordCodecBuilder.create(i -> i.group(
             Burst.CODEC.listOf().fieldOf("bursts").forGetter(Shell::bursts),
-            Codec.floatRange(0.25f, 4.0f).optionalFieldOf("scale", 1.0f).forGetter(Shell::scale)
+            Codec.floatRange(0.25f, 4.0f).optionalFieldOf("scale", 1.0f).forGetter(Shell::scale),
+            Codec.STRING.optionalFieldOf("rarity", "").forGetter(Shell::rarity)
     ).apply(i, Shell::new));
 
     public Shell {
         bursts = List.copyOf(bursts);
+        if (!Rarity.isTag(rarity)) rarity = "";
+    }
+
+    public Shell(List<Burst> bursts, float scale) {
+        this(bursts, scale, "");
     }
 
     /** The shell on this rocket, if it has one. */
@@ -58,7 +65,7 @@ public record Shell(List<Burst> bursts, float scale) {
             Shape shape = Shape.byId(b.shape());
             FireworkExplosion.Shape vanilla = shape == null ? FireworkExplosion.Shape.SMALL_BALL : shape.fallback;
             out.add(new FireworkExplosion(vanilla, new IntArrayList(b.colors()), new IntArrayList(b.fades()),
-                    b.trail(), b.twinkle()));
+                    b.trail(), b.twinkle() || (b.pattern() != null && b.pattern().sparkle())));
         }
         return out;
     }

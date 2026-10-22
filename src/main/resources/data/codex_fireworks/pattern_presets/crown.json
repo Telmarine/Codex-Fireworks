@@ -1,0 +1,28 @@
+{
+  "name": "Crown",
+  "rows": [
+    "................",
+    "................",
+    "..y.....y.....y.",
+    "..yy...yyy...yy.",
+    "..yyy.yyyyy.yyy.",
+    "..yyyyyyyyyyyyy.",
+    "..yyyyyyyyyyyyy.",
+    "..yyrryybbyyggy.",
+    "..yyrryybbyyggy.",
+    "..yyyyyyyyyyyyy.",
+    "..ooooooooooooo.",
+    "..yyyyyyyyyyyyy.",
+    "..ooooooooooooo.",
+    "................",
+    "................",
+    "................"
+  ],
+  "colors": {
+    "y": "yellow",
+    "o": "orange",
+    "r": "red",
+    "b": "blue",
+    "g": "lime"
+  }
+}

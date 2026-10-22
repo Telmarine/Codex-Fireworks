@@ -36,16 +36,12 @@ public final class Perm {
     private static final Map<String, Entry> NODES = new LinkedHashMap<>();
 
     /** Firework Workbench and Pattern Cards. */
-    @SuppressWarnings("unused") // registered now, checked once its feature is built
     public static final String DESIGN = node("design", Who.PLAYER);
     /** Use launchers. */
-    @SuppressWarnings("unused") // registered now, checked once its feature is built
     public static final String LAUNCHER_USE = node("launcher.use", Who.PLAYER);
     /** Edit shows on a Show Controller. */
-    @SuppressWarnings("unused") // registered now, checked once its feature is built
     public static final String SHOW_EDIT = node("show.edit", Who.PLAYER);
     /** Custom hex colors in patterns (when hex_for_everyone is off). */
-    @SuppressWarnings("unused") // registered now, checked once its feature is built
     public static final String PATTERN_HEX = node("pattern.hex", Who.STAFF);
     /** /fireworks give rocket|pattern */
     public static final String GIVE = node("give", Who.STAFF);

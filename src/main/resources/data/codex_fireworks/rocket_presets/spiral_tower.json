@@ -2,6 +2,7 @@
   "name": "Spiral Tower",
   "flight": 2,
   "scale": 1.5,
+  "rarity": "common",
   "bursts": [
     {
       "shape": "spiral",

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "codex_fireworks:block/launcher_top",
+    "bottom": "codex_fireworks:block/launcher_bottom",
+    "side": "codex_fireworks:block/launcher_side"
+  }
+}

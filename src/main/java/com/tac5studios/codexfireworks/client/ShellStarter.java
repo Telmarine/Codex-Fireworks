@@ -3,6 +3,7 @@ package com.tac5studios.codexfireworks.client;
 import com.tac5studios.codexfireworks.client.shapes.BuiltInShapes;
 import com.tac5studios.codexfireworks.client.shapes.BurstContext;
 import com.tac5studios.codexfireworks.config.ClientConfig;
+import com.tac5studios.codexfireworks.registry.ModSounds;
 import com.tac5studios.codexfireworks.shell.Burst;
 import com.tac5studios.codexfireworks.shell.Shape;
 import com.tac5studios.codexfireworks.shell.Shell;
@@ -55,24 +56,29 @@ public class ShellStarter extends NoRenderParticle {
         sound(shape, b, bx, by, bz);
     }
 
+    /**
+     * The blast, then a delayed second sound for glittering shapes.
+     * With shape_sounds on, Crackle, Comet, Willow and Strobe use this mod's own sounds;
+     * every other shape (or shape_sounds off) uses the vanilla firework sounds.
+     */
     private void sound(Shape shape, Burst b, double bx, double by, double bz) {
         float volume = (float) (20f * ClientConfig.VOLUME.get());
         if (volume <= 0f) return;
         boolean far = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition()
                 .distanceToSqr(new Vec3(bx, by, bz)) >= 256.0;
-        boolean large = switch (shape) {
-            case PEONY, CHRYSANTHEMUM, WILLOW, PALM, BROCADE -> true;
+        boolean own = ClientSettings.sounds();
+        boolean large = own && switch (shape) {
+            case PEONY, CHRYSANTHEMUM, WILLOW, PALM, BROCADE, PATTERN -> true;
             default -> false;
         };
-        if (!ClientSettings.sounds()) large = false;
 
         SoundEvent blast = large
                 ? (far ? SoundEvents.FIREWORK_ROCKET_LARGE_BLAST_FAR : SoundEvents.FIREWORK_ROCKET_LARGE_BLAST)
                 : (far ? SoundEvents.FIREWORK_ROCKET_BLAST_FAR : SoundEvents.FIREWORK_ROCKET_BLAST);
+        if (own && shape == Shape.WILLOW) blast = ModSounds.WILLOW.get();
         float pitch = 0.95f + random.nextFloat() * 0.1f;
-        if (ClientSettings.sounds()) {
+        if (own) {
             pitch = switch (shape) {
-                case WILLOW -> 0.75f;
                 case PALM -> 0.85f;
                 case RING, DOUBLE_RING, HEART -> 1.1f;
                 case COMET -> 1.2f;
@@ -80,16 +86,33 @@ public class ShellStarter extends NoRenderParticle {
             };
         }
         level.playLocalSound(bx, by, bz, blast, SoundSource.AMBIENT, volume, pitch, true);
+        if (own && shape == Shape.COMET) {
+            level.playLocalSound(bx, by, bz, ModSounds.COMET.get(), SoundSource.AMBIENT, volume * 0.6f, 0.95f + random.nextFloat() * 0.1f, true);
+        }
 
-        boolean sparkle = b.twinkle() || (ClientSettings.sounds() && switch (shape) {
-            case CRACKLE, STROBE, BROCADE, WILLOW -> true;
-            default -> false;
-        });
-        if (sparkle) {
-            ClientSchedule.later(level, shape == Shape.CRACKLE ? 18 : 30, () ->
-                    level.playLocalSound(bx, by, bz,
-                            far ? SoundEvents.FIREWORK_ROCKET_TWINKLE_FAR : SoundEvents.FIREWORK_ROCKET_TWINKLE,
-                            SoundSource.AMBIENT, volume, 0.9f + random.nextFloat() * 0.15f, true));
+        SoundEvent after = null;
+        int wait = 30;
+        if (own) {
+            switch (shape) {
+                case CRACKLE -> {
+                    after = ModSounds.CRACKLE.get();
+                    wait = 16;
+                }
+                case STROBE -> {
+                    after = ModSounds.STROBE.get();
+                    wait = 12;
+                }
+                case BROCADE, WILLOW -> after = far ? SoundEvents.FIREWORK_ROCKET_TWINKLE_FAR : SoundEvents.FIREWORK_ROCKET_TWINKLE;
+                default -> { }
+            }
+        }
+        if (after == null && (b.twinkle() || (b.pattern() != null && b.pattern().sparkle()))) {
+            after = far ? SoundEvents.FIREWORK_ROCKET_TWINKLE_FAR : SoundEvents.FIREWORK_ROCKET_TWINKLE;
+        }
+        if (after != null) {
+            SoundEvent sound = after;
+            ClientSchedule.later(level, wait, () -> level.playLocalSound(bx, by, bz, sound, SoundSource.AMBIENT, volume,
+                    0.9f + random.nextFloat() * 0.15f, true));
         }
     }
 }

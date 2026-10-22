@@ -2,6 +2,7 @@
   "name": "Rainbow Ring",
   "flight": 2,
   "scale": 1.5,
+  "rarity": "rare",
   "bursts": [
     {
       "shape": "ring",

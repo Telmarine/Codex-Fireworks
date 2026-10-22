@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "codex_fireworks:block/show_controller_side",
+    "down": "codex_fireworks:block/show_controller_side",
+    "up": "codex_fireworks:block/show_controller_top",
+    "north": "codex_fireworks:block/show_controller_front",
+    "south": "codex_fireworks:block/show_controller_front",
+    "east": "codex_fireworks:block/show_controller_side",
+    "west": "codex_fireworks:block/show_controller_side"
+  }
+}

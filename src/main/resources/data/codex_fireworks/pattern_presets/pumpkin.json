@@ -1,0 +1,26 @@
+{
+  "name": "Pumpkin",
+  "rows": [
+    "........g.......",
+    ".......gg.......",
+    "...oooogoooo....",
+    "..oooooooooooo..",
+    ".oooooooooooooo.",
+    ".ooo.yoooooy.oo.",
+    "oooo.yyoooyy.ooo",
+    "oooooooo.ooooooo",
+    "oooooooyyyoooooo",
+    "oo.ooooooooooo.o",
+    "ooo.y.y.y.y.y.oo",
+    ".ooo.y.y.y.y.oo.",
+    ".oooo.......ooo.",
+    "..oooooooooooo..",
+    "....oooooooo....",
+    "................"
+  ],
+  "colors": {
+    "o": "orange",
+    "y": "yellow",
+    "g": "green"
+  }
+}

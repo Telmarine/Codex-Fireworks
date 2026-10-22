@@ -3,6 +3,14 @@ package com.tac5studios.codexfireworks;
 import com.tac5studios.codexfireworks.config.ClientConfig;
 import com.tac5studios.codexfireworks.config.Features;
 import com.tac5studios.codexfireworks.config.Limits;
+import com.tac5studios.codexfireworks.registry.ModBlockEntities;
+import com.tac5studios.codexfireworks.registry.ModBlocks;
+import com.tac5studios.codexfireworks.registry.ModComponents;
+import com.tac5studios.codexfireworks.registry.ModItems;
+import com.tac5studios.codexfireworks.registry.ModMenus;
+import com.tac5studios.codexfireworks.registry.ModRecipes;
+import com.tac5studios.codexfireworks.registry.ModSounds;
+import com.tac5studios.codexfireworks.registry.ModTab;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
@@ -24,10 +32,16 @@ import org.slf4j.LoggerFactory;
  *   perms.Perm             register permission nodes
  *   messages.Msg           read messages.toml
  *   shell.RocketPresets    load the rocket presets from datapacks
- *   network.Network        send the server's switches to each player
+ *   shell.MysteryRocket    swap a launched Mystery Rocket for a random preset
+ *   pattern.PatternPresets load the pattern presets (datapacks + config/codex_fireworks/patterns)
+ *   show.ShowRunner        play the running shows
+ *   network.Network        all packets
  *   commands.Commands      /fireworks
  *   rules.FireworkDamage   firework damage switch
- *   client.*               particles, tooltips, drawing the bursts
+ *   client.*               particles, screens, tooltips, drawing the bursts
+ *
+ * <p>Registered here: blocks (Firework Workbench, Launcher, Show Controller), items (Pattern Card, Show Card),
+ * block entities, menus, item data components, shape sounds, the Pattern Card copy recipe and the creative tab.
  */
 @Mod(CodexFireworks.MOD_ID)
 public class CodexFireworks {
@@ -43,6 +57,14 @@ public class CodexFireworks {
 
     public CodexFireworks(IEventBus modBus, ModContainer container) {
         PARTICLES.register(modBus);
+        ModBlocks.register(modBus);
+        ModItems.register(modBus);
+        ModBlockEntities.register(modBus);
+        ModMenus.register(modBus);
+        ModComponents.register(modBus);
+        ModSounds.register(modBus);
+        ModRecipes.register(modBus);
+        ModTab.register(modBus);
         // config/codex_fireworks/features.toml, limits.toml, client.toml
         Features.register(container);
         Limits.register(container);

@@ -1,0 +1,29 @@
+{
+  "name": "Christmas Tree",
+  "rows": [
+    ".......y........",
+    "......yyy.......",
+    ".......l........",
+    "......lgl.......",
+    ".....lgrgl......",
+    "......ggg.......",
+    ".....ggbggl.....",
+    "....lggggggl....",
+    ".....gggrgg.....",
+    "....ggyggggg....",
+    "...lggggggbgl...",
+    "..lggrgggggggl..",
+    "..ggggggyggrggg.",
+    ".......hh.......",
+    ".......hh.......",
+    "................"
+  ],
+  "colors": {
+    "y": "yellow",
+    "g": "green",
+    "l": "lime",
+    "r": "red",
+    "b": "light_blue",
+    "h": "brown"
+  }
+}

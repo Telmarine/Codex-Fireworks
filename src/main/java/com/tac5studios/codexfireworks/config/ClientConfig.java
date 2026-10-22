@@ -27,6 +27,7 @@ public final class ClientConfig {
 
     public static final EnumValue<Quality> QUALITY;
     public static final IntValue MAX_SPARKS_PER_BURST;
+    public static final IntValue MAX_SPARKS_TOTAL;
     public static final DoubleValue VOLUME;
 
     static {
@@ -36,6 +37,9 @@ public final class ClientConfig {
                 .defineEnum("quality", Quality.FULL);
         MAX_SPARKS_PER_BURST = b.comment("Most sparks drawn for one burst, after quality is applied.")
                 .defineInRange("max_sparks_per_burst", 400, 16, 1000);
+        MAX_SPARKS_TOTAL = b.comment("Most sparks from this mod on screen at once. New sparks are skipped above this,",
+                        "so a big show can't reach the game's particle limit (16384).")
+                .defineInRange("max_sparks_total", 12000, 500, 16000);
         VOLUME = b.comment("Volume of firework sounds from this mod, 0.0 to 1.0.")
                 .defineInRange("volume", 1.0, 0.0, 1.0);
         SPEC = b.build();

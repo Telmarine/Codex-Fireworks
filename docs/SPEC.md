@@ -2,7 +2,7 @@
 
 Firework mod for NeoForge 1.21.1 where players design their own rockets: the burst shape, the formation of several bursts, and timed shows. Part of the Codex family (TAC5 Studios / Telmarine).
 
-Status: build phase 1 written (shapes, shell data, rocket presets, /fireworks give rocket, master control file, overlap guard). Phases 2-6 to come.
+Status: build phases 1-6 written. Phase 1: shapes, shell data, rocket presets, /fireworks give rocket, master control file, overlap guard. Phases 2-6: Firework Workbench, patterns and Pattern Cards, text mode, pattern presets, Mystery Rocket, rarity, shape sounds, Launcher, Show Controller, Show Cards, /fireworks show, limits, client spark cap, protection and permissions.
 
 ## Identity
 - Name: Codex: Fireworks · mod ID `codex_fireworks` · package `com.tac5studios.codexfireworks`
@@ -47,7 +47,7 @@ Peony, Chrysanthemum (trail), Willow (slow drooping trails), Palm (thick arms), 
 - Custom hex colors: staff only by default (`fireworks.pattern.hex`); a server switch opens them to everyone.
 - Options per pattern: size (small/medium/large), face the launcher or face a fixed direction, spin, sparkle, fade color.
 - Saved as a **Pattern Card** item (stores the grid in a data component). Cards can be copied, renamed and traded.
-- Text mode: up to 12 characters (A–Z, 0–9, basic punctuation) in a built-in 5×7 pixel font, two lines on the 16-wide grid. A shortcut that fills the grid.
+- Text mode: up to 12 characters (A–Z, 0–9, basic punctuation) in a built-in 5×7 pixel font, one or two lines ("|" starts line 2). A line holds up to 8 characters, so text patterns can be up to 47 pixels wide and 16 high.
 
 ## 2. Shells (rocket formations)
 - Built in the **Firework Workbench** (new block). Slots: rocket body (paper + gunpowder sets flight 1–3), up to 8 burst slots (firework stars or Pattern Cards), and a formation editor.
@@ -71,7 +71,7 @@ Ready-made shells, given by `/fireworks give rocket <id>` and craftable in the w
 12. **Grand Finale:** all 8 slots — Willow, 2 Crossettes, Crackle, Ring, 2 Strobes, Brocade — in a quick Multi-break.
 
 ### Built-in pattern presets (16×16, drawn by us)
-Smiley, Star, Creeper Face, Sword, Crown, Skull, Pumpkin, Snowflake, Christmas Tree, Present; text presets "GG", "HAPPY NEW YEAR" (two lines), "WELCOME".
+Smiley, Star, Ghost, Sword, Crown, Skull, Pumpkin, Snowflake, Christmas Tree, Present; text presets "GG", "HAPPY NEW YEAR" (two lines), "WELCOME". (Ghost replaces the planned Creeper Face, so no Mojang mob art is copied.)
 
 ### Extras
 - **Mystery Rocket:** item that fires a random built-in preset each launch. Preset pool set in `limits.toml`.
@@ -89,7 +89,10 @@ Smiley, Star, Creeper Face, Sword, Crown, Skull, Pumpkin, Snowflake, Christmas T
 - Launcher: dispenser + iron ingots + gunpowder
 - Show Controller: Launcher + redstone + clock
 - Pattern Card: paper + any dye
+- Show Card: paper + redstone
+- Pattern Card copies: a drawn card + blank cards in a crafting grid
 - All recipes are datapack JSON, so servers can change them.
+- No mineable tags: the blocks mine like oak planks (workbench) or stone (launcher, controller) through code, so the right tool is faster and every tool drops them.
 
 ## Size
 - `limits.toml` `[display]`: `burst_scale` (spread and spacing between bursts, default 1.6) and `spark_scale` (spark size, default 1.5), 1.0 = vanilla firework size. Sent to every player on join and when the file changes.
@@ -101,7 +104,8 @@ Smiley, Star, Creeper Face, Sword, Crown, Skull, Pumpkin, Snowflake, Christmas T
 - Bursts only send small packets (pattern id or grid + colors); the client builds the particles.
 
 ## Protection
-- Launchers and controllers record their owner. Only the owner, the land owner and staff can change them.
+- Launchers and controllers record their owner. Only the owner, the land owner and staff (`fireworks.bypass`) can change them.
+- Linking: shift-right-click a Show Controller (or press Link in its screen), then shift-right-click launchers to add or remove them, then the controller again to finish (ends by itself after 2 minutes). Works with an item in hand. No separate linking item.
 - Claim checks (optional, by reflection): Elements: Claims via ClaimsAPI first, then OPAC / FTB Chunks if installed.
 - Firework damage: vanilla damage stays on by default; `features.toml` switch to turn off firework damage to players.
 

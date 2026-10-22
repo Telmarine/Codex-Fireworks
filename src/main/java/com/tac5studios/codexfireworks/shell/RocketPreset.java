@@ -14,18 +14,21 @@ import java.util.List;
  * @param enabled false hides the preset
  * @param bursts  1-8 bursts
  * @param scale   size of this rocket, 1.0 = normal (0.25-4.0); multiplies spread, offsets and spark size
+ * @param rarity  "common", "rare", "epic", or "" for no tag
  */
-public record RocketPreset(String name, int flight, boolean enabled, List<Burst> bursts, float scale) {
+public record RocketPreset(String name, int flight, boolean enabled, List<Burst> bursts, float scale, String rarity) {
 
     public static final Codec<RocketPreset> CODEC = RecordCodecBuilder.create(i -> i.group(
             Codec.STRING.fieldOf("name").forGetter(RocketPreset::name),
             Codec.intRange(1, 3).optionalFieldOf("flight", 2).forGetter(RocketPreset::flight),
             Codec.BOOL.optionalFieldOf("enabled", true).forGetter(RocketPreset::enabled),
             Burst.CODEC.listOf(1, 8).fieldOf("bursts").forGetter(RocketPreset::bursts),
-            Codec.floatRange(0.25f, 4.0f).optionalFieldOf("scale", 1.0f).forGetter(RocketPreset::scale)
+            Codec.floatRange(0.25f, 4.0f).optionalFieldOf("scale", 1.0f).forGetter(RocketPreset::scale),
+            Codec.STRING.optionalFieldOf("rarity", "").forGetter(RocketPreset::rarity)
     ).apply(i, RocketPreset::new));
 
     public RocketPreset {
         bursts = List.copyOf(bursts);
+        if (!Rarity.isTag(rarity)) rarity = "";
     }
 }

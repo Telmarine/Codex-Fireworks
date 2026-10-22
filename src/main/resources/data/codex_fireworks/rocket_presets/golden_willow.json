@@ -2,6 +2,7 @@
   "name": "Golden Willow",
   "flight": 3,
   "scale": 1.5,
+  "rarity": "rare",
   "bursts": [
     {
       "shape": "willow",

@@ -1,0 +1,26 @@
+{
+  "name": "Present",
+  "rows": [
+    "................",
+    "....yy....yy....",
+    "...y..y..y..y...",
+    "....yy.yy.yy....",
+    "......yyyy......",
+    ".rrrrrryyrrrrrr.",
+    ".rrrrrryyrrrrrr.",
+    ".yyyyyyyyyyyyyy.",
+    ".rrrrrryyrrrrrr.",
+    ".RrrrrryyrrrrrR.",
+    ".RrrrrryyrrrrrR.",
+    ".RrrrrryyrrrrrR.",
+    ".RrrrrryyrrrrrR.",
+    ".RRRRRRyyRRRRRR.",
+    "................",
+    "................"
+  ],
+  "colors": {
+    "r": "red",
+    "y": "yellow",
+    "R": "#8B1A1A"
+  }
+}

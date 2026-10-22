@@ -2,6 +2,7 @@
   "name": "Heart Cluster",
   "flight": 2,
   "scale": 1.5,
+  "rarity": "rare",
   "bursts": [
     {
       "shape": "heart",

@@ -3,6 +3,9 @@ package com.tac5studios.codexfireworks.shell;
 import com.tac5studios.codexfireworks.config.Feature;
 import net.minecraft.world.item.component.FireworkExplosion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The built-in burst shapes. Each has its switch in features.toml and a plain vanilla shape
  * that the rocket carries as its fallback star (used when the mod isn't there to draw ours).
@@ -22,7 +25,9 @@ public enum Shape {
     STROBE("strobe", Feature.STROBE, FireworkExplosion.Shape.SMALL_BALL),
     COMET("comet", Feature.COMET, FireworkExplosion.Shape.BURST),
     FISH("fish", Feature.FISH, FireworkExplosion.Shape.SMALL_BALL),
-    BROCADE("brocade", Feature.BROCADE, FireworkExplosion.Shape.LARGE_BALL);
+    BROCADE("brocade", Feature.BROCADE, FireworkExplosion.Shape.LARGE_BALL),
+    /** A drawn picture from a Pattern Card. Switched with [patterns] patterns. */
+    PATTERN("pattern", Feature.PATTERNS, FireworkExplosion.Shape.STAR);
 
     public final String id;
     public final Feature feature;
@@ -37,6 +42,13 @@ public enum Shape {
     /** Translation key of the shape name, for tooltips. */
     public String langKey() {
         return "shape.codex_fireworks." + id;
+    }
+
+    /** The 14 built-in shapes, without the drawn pattern (for the workbench shape picker). */
+    public static List<Shape> builtIn() {
+        List<Shape> out = new ArrayList<>(List.of(values()));
+        out.remove(PATTERN);
+        return out;
     }
 
     /** The shape with this id, or null. */

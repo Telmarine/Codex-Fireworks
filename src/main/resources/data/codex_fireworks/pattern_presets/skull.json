@@ -1,0 +1,25 @@
+{
+  "name": "Skull",
+  "rows": [
+    "................",
+    "....wwwwwwww....",
+    "...wwwwwwwwww...",
+    "..wwwwwwwwwwww..",
+    "..wwwwwwwwwwww..",
+    "..ww...ww...ww..",
+    "..ww...ww...ww..",
+    "..ww...ww...ww..",
+    "..wwwwwwwwwwww..",
+    "...wwwww.wwwww..",
+    "....wwwwwwwww...",
+    ".....wgwgwgw....",
+    ".....wgwgwgw....",
+    "......wwwww.....",
+    "................",
+    "................"
+  ],
+  "colors": {
+    "w": "white",
+    "g": "light_gray"
+  }
+}

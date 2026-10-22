@@ -1,7 +1,12 @@
 package com.tac5studios.codexfireworks.client;
 
 import com.tac5studios.codexfireworks.CodexFireworks;
+import com.tac5studios.codexfireworks.client.screen.LauncherScreen;
+import com.tac5studios.codexfireworks.client.screen.WorkbenchScreen;
+import com.tac5studios.codexfireworks.registry.ModMenus;
 import com.tac5studios.codexfireworks.shell.Burst;
+import com.tac5studios.codexfireworks.shell.Rarity;
+import com.tac5studios.codexfireworks.shell.RocketFactory;
 import com.tac5studios.codexfireworks.shell.Shape;
 import com.tac5studios.codexfireworks.shell.Shell;
 import net.minecraft.ChatFormatting;
@@ -15,6 +20,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
@@ -23,7 +29,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-/** Client setup: the spark particle, rocket tooltips, and clearing the server's switches on leave. */
+/** Client setup: the spark particle, screens, rocket tooltips, and clearing state on leave. */
 @SuppressWarnings("unused") // nested classes are found by @EventBusSubscriber
 public final class ClientEvents {
 
@@ -42,6 +48,13 @@ public final class ClientEvents {
                 return (type, level, x, y, z, dx, dy, dz) -> new CodexSpark(level, x, y, z, dx, dy, dz, 0xFFFFFF);
             });
         }
+
+        @SubscribeEvent
+        @SuppressWarnings("unused") // called by the event bus
+        public static void onScreens(RegisterMenuScreensEvent e) {
+            e.register(ModMenus.WORKBENCH.get(), WorkbenchScreen::new);
+            e.register(ModMenus.LAUNCHER.get(), LauncherScreen::new);
+        }
     }
 
     @EventBusSubscriber(modid = CodexFireworks.MOD_ID, value = Dist.CLIENT)
@@ -54,9 +67,13 @@ public final class ClientEvents {
         public static void onTooltip(ItemTooltipEvent e) {
             ItemStack stack = e.getItemStack();
             if (!stack.is(Items.FIREWORK_ROCKET)) return;
+            List<Component> lines = e.getToolTip();
+            if (RocketFactory.isMystery(stack)) {
+                lines.add(Component.translatable("tooltip.codex_fireworks.mystery").withStyle(ChatFormatting.GRAY));
+                return;
+            }
             Optional<Shell> shell = Shell.read(stack);
             if (shell.isEmpty()) return;
-            List<Component> lines = e.getToolTip();
 
             Fireworks fw = stack.get(DataComponents.FIREWORKS);
             if (fw != null) lines.add(line("tooltip.codex_fireworks.flight", Component.literal(String.valueOf(fw.flightDuration()))));
@@ -73,12 +90,25 @@ public final class ClientEvents {
                 first = false;
             }
             lines.add(line("tooltip.codex_fireworks.shapes", shapes));
+            String rarity = shell.get().rarity();
+            if (!rarity.isEmpty()) {
+                lines.add(Component.translatable("tooltip.codex_fireworks.rarity",
+                        Component.translatable(Rarity.langKey(rarity)).withStyle(Rarity.vanilla(rarity).getStyleModifier()))
+                        .withStyle(ChatFormatting.GRAY));
+            }
         }
 
         @SubscribeEvent
         @SuppressWarnings("unused") // called by the event bus
         public static void onLeave(ClientPlayerNetworkEvent.LoggingOut e) {
             ClientSettings.reset();
+            CodexSpark.resetCount();
+        }
+
+        @SubscribeEvent
+        @SuppressWarnings("unused") // called by the event bus
+        public static void onRespawn(ClientPlayerNetworkEvent.Clone e) {
+            CodexSpark.resetCount(); // the particle engine is cleared on a dimension change
         }
 
         private static Component line(String key, Component value) {

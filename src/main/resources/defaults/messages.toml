@@ -4,13 +4,72 @@
 
 [general]
 prefix = "&8[&6Fireworks&8] "
+no_permission = "{prefix}&cYou don't have permission to do that."
+not_yours = "{prefix}&cThis belongs to someone else."
 
 [cmd]
-reloaded = "{prefix}&7Reloaded. &e{presets} &7rocket preset(s), &e{guarded} &7feature(s) turned off by the overlap guard."
+reloaded = "{prefix}&7Reloaded. &e{presets} &7rocket preset(s), &e{patterns} &7server pattern(s), &e{guarded} &7feature(s) turned off by the overlap guard."
 off = "{prefix}&cCodex: Fireworks is turned off in features.toml."
 
 [give]
 done = "{prefix}&7Gave &e{amount}x {rocket} &7to &e{players}&7."
 unknown = "{prefix}&cNo rocket preset called &e{id}&c."
+unknown_pattern = "{prefix}&cNo pattern called &e{id}&c."
 presets_off = "{prefix}&cRocket presets are turned off in features.toml."
+patterns_off = "{prefix}&cPattern presets are turned off in features.toml."
+mystery_off = "{prefix}&cMystery Rockets are turned off in features.toml."
 shape_off = "{prefix}&c{rocket} uses a shape that's turned off: &e{shape}&c."
+
+[workbench]
+shells_off = "{prefix}&cThe Firework Workbench is turned off on this server."
+need_paper = "{prefix}&cPut paper in the paper slot."
+need_gunpowder = "{prefix}&cThis needs &e{amount} &cgunpowder."
+no_bursts = "{prefix}&cPut at least one firework star or Pattern Card in the burst slots."
+blank_card = "{prefix}&cOne of the Pattern Cards is blank. Draw on it first."
+too_many = "{prefix}&cA rocket can hold up to &e{max} &cbursts on this server."
+shape_off = "{prefix}&cThe shape &e{shape} &cis turned off on this server."
+crafted = "{prefix}&7Made &e{rocket} &7with &e{bursts} &7burst(s)."
+
+[pattern]
+off = "{prefix}&cDrawn patterns are turned off on this server."
+not_holding = "{prefix}&cHold the Pattern Card while you save."
+no_hex = "{prefix}&cOnly the 16 dye colors can be used here."
+text_off = "{prefix}&cText mode is turned off on this server."
+too_many_sparks = "{prefix}&cA pattern can have up to &e{max} &clit pixels."
+saved = "{prefix}&7Pattern saved (&e{sparks} &7sparks)."
+cleared = "{prefix}&7Pattern Card cleared."
+
+[launcher]
+off = "{prefix}&cLaunchers are turned off on this server."
+
+[link]
+start = "{prefix}&7Linking: shift-right-click launchers within &e{range} &7blocks to add or remove them. Shift-right-click this controller again to finish."
+added = "{prefix}&7Launcher &e#{number} &7linked (&e{count} &7linked)."
+removed = "{prefix}&7Launcher removed (&e{count} &7linked)."
+done = "{prefix}&7Linking finished. &e{count} &7launcher(s) linked."
+too_far = "{prefix}&cThat launcher is more than &e{range} &cblocks from the controller."
+too_many = "{prefix}&cA controller can have up to &e{max} &claunchers."
+other_dimension = "{prefix}&cThe controller is in another dimension."
+controller_gone = "{prefix}&cThe controller you were linking is gone."
+
+[show]
+off = "{prefix}&cShows are turned off on this server."
+no_cues = "{prefix}&cThis show has no cues yet."
+no_launchers = "{prefix}&cLink at least one launcher first."
+too_many = "{prefix}&cToo many shows running near here (up to &e{max}&c)."
+too_many_cues = "{prefix}&cA show can have up to &e{max} &ccues. The rest were dropped."
+name_taken = "{prefix}&cAnother controller already uses the name &e{name}&c."
+started = "{prefix}&7Show started."
+stopped = "{prefix}&7Show stopped."
+started_named = "{prefix}&7Show &e{name} &7started."
+stopped_named = "{prefix}&7Show &e{name} &7stopped."
+not_running = "{prefix}&cNo running show called &e{name}&c."
+unknown = "{prefix}&cNo show called &e{name}&c."
+need_card = "{prefix}&cHold a Show Card."
+blank_card = "{prefix}&cThis Show Card is blank. Hold a card with a show written on it."
+card_written = "{prefix}&7Show written to the card."
+card_read = "{prefix}&7Show read from the card."
+list_header = "{prefix}&7{count} show(s):"
+list_entry = "&7- &e{name} &8({x} {y} {z}, {dimension})"
+list_running = "&7- &e{name} &a(running) &8({x} {y} {z}, {dimension})"
+list_empty = "{prefix}&7No named shows yet. Give a show a name in the Show Controller screen."

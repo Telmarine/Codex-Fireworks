@@ -2,6 +2,7 @@
   "name": "Triple Break",
   "flight": 3,
   "scale": 1.5,
+  "rarity": "rare",
   "bursts": [
     {
       "shape": "peony",

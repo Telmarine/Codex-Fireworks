@@ -1,0 +1,34 @@
+{
+  "shape.crackle": {
+    "subtitle": "subtitles.codex_fireworks.shape.crackle",
+    "sounds": [
+      {
+        "name": "codex_fireworks:shape/crackle"
+      }
+    ]
+  },
+  "shape.comet": {
+    "subtitle": "subtitles.codex_fireworks.shape.comet",
+    "sounds": [
+      {
+        "name": "codex_fireworks:shape/comet"
+      }
+    ]
+  },
+  "shape.willow": {
+    "subtitle": "subtitles.codex_fireworks.shape.willow",
+    "sounds": [
+      {
+        "name": "codex_fireworks:shape/willow"
+      }
+    ]
+  },
+  "shape.strobe": {
+    "subtitle": "subtitles.codex_fireworks.shape.strobe",
+    "sounds": [
+      {
+        "name": "codex_fireworks:shape/strobe"
+      }
+    ]
+  }
+}

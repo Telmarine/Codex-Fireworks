@@ -1,5 +1,6 @@
 package com.tac5studios.codexfireworks.client;
 
+import com.tac5studios.codexfireworks.config.ClientConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
@@ -16,6 +17,10 @@ public final class CodexSpark extends TextureSheetParticle {
     /** Filled in when the particle provider is registered (client start). */
     static SpriteSet sprites;
 
+    /** Sparks of this mod alive right now (client.toml max_sparks_total caps it). */
+    private static int alive;
+    /** Game time when a spark last ticked. If none ticked for 5 seconds the count starts over (self-repair). */
+    private static long lastTick;
 
     /** Called when a splitting spark reaches its split age. */
     public interface Splitter {
@@ -51,11 +56,17 @@ public final class CodexSpark extends TextureSheetParticle {
         this.quadSize = 0.1f;
         this.lifetime = 45;
         if (sprites != null) setSpriteFromAge(sprites);
+        alive++;
     }
 
-    /** Make a spark and add it to the particle engine. Returns null when the textures aren't ready. */
+    /**
+     * Make a spark and add it to the particle engine.
+     * Returns null when the textures aren't ready or the player's spark limit is reached.
+     */
     public static CodexSpark spawn(ClientLevel level, double x, double y, double z, double vx, double vy, double vz, int rgb) {
         if (sprites == null) return null;
+        if (level.getGameTime() - lastTick > 100) alive = 0;
+        if (alive >= ClientConfig.MAX_SPARKS_TOTAL.get()) return null;
         CodexSpark s = new CodexSpark(level, x, y, z, vx, vy, vz, rgb);
         Minecraft.getInstance().particleEngine.add(s);
         return s;
@@ -139,6 +150,18 @@ public final class CodexSpark extends TextureSheetParticle {
         return this;
     }
 
+    /** Move straight to this point during the next tick (used by drawn patterns, which place every spark). */
+    public void steer(double tx, double ty, double tz) {
+        this.xd = tx - x;
+        this.yd = ty - y;
+        this.zd = tz - z;
+    }
+
+    /** Forget the count, e.g. when the particle engine was cleared on leaving a world. */
+    public static void resetCount() {
+        alive = 0;
+    }
+
     public int rgb() {
         return ((int) (baseR * 255) << 16) | ((int) (baseG * 255) << 8) | (int) (baseB * 255);
     }
@@ -161,6 +184,7 @@ public final class CodexSpark extends TextureSheetParticle {
 
     @Override
     public void tick() {
+        lastTick = level.getGameTime();
         super.tick();
         if (removed) {
             if (crackle) pop();
@@ -223,6 +247,12 @@ public final class CodexSpark extends TextureSheetParticle {
                 s.quadSize = quadSize * 0.6f;
             }
         }
+    }
+
+    @Override
+    public void remove() {
+        if (!removed) alive = Math.max(0, alive - 1);
+        super.remove();
     }
 
     @Override
