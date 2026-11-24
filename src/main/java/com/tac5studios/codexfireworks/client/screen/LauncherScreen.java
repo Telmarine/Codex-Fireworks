@@ -4,6 +4,8 @@ import com.tac5studios.codexfireworks.launcher.LauncherBlockEntity;
 import com.tac5studios.codexfireworks.launcher.LauncherMenu;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -34,6 +36,9 @@ public class LauncherScreen extends AbstractContainerScreen<LauncherMenu> {
             addRenderableWidget(Ui.button(x + RX + 140, row, 12, 12, "+", b -> click(plus)));
         }
         addRenderableWidget(Ui.button(x + imageWidth - 50, y + 4, 42, 11, Component.translatable("gui.codex_fireworks.test_fire"), b -> click(10)));
+        Button clear = Ui.button(x + RX, y + 82, 82, 11, Component.translatable("gui.codex_fireworks.clear_memory"), b -> click(11));
+        clear.setTooltip(Tooltip.create(Component.translatable("gui.codex_fireworks.clear_memory_tip")));
+        addRenderableWidget(clear);
     }
 
     private void click(int id) {

@@ -2,15 +2,15 @@
 
 Firework mod for NeoForge 1.21.1 where players design their own rockets: the burst shape, the formation of several bursts, and timed shows. Part of the Codex family (TAC5 Studios / Telmarine).
 
-Status: build phases 1-6 written. Phase 1: shapes, shell data, rocket presets, /fireworks give rocket, master control file, overlap guard. Phases 2-6: Firework Workbench, patterns and Pattern Cards, text mode, pattern presets, Mystery Rocket, rarity, shape sounds, Launcher, Show Controller, Show Cards, /fireworks show, limits, client spark cap, protection and permissions.
+Status: 1.0.0 released (build phases 1-6). 1.0.1 adds automation (see "Automation (1.0.1)"). Phase 1: shapes, shell data, rocket presets, /fireworks give rocket, master control file, overlap guard. Phases 2-6: Firework Workbench, patterns and Pattern Cards, text mode, pattern presets, Mystery Rocket, rarity, shape sounds, Launcher, Show Controller, Show Cards, /fireworks show, limits, client spark cap, protection and permissions.
 
 ## Identity
 - Name: Codex: Fireworks · mod ID `codex_fireworks` · package `com.tac5studios.codexfireworks`
 - **Client + server** (like Title Scrolls). New burst shapes are drawn by the client, so players need the mod.
-- NeoForge 21.1.x, Java 21, version 1.0.0
+- NeoForge 21.1.x, Java 21, version 1.0.1
 - Ranges: `minecraft_version_range=[1.21.1]`, `neo_version_range=[21.1.0,21.2)`
 - Custom license (free, credit Telmarine, no resale). CurseForge + GitHub only.
-- Works on its own. Elements: Claims and other claim mods are optional hooks.
+- Works on its own. Elements: Claims and other claim mods, Create and CC: Tweaked are optional hooks.
 
 ## Background (research, Oct 2026)
 - Vanilla has 5 shapes (small ball, large ball, star, creeper, burst), plus trail, twinkle, colors and fade colors. A rocket holds up to 256 explosions, flight duration 1–3.
@@ -84,6 +84,17 @@ Smiley, Star, Ghost, Sword, Crown, Skull, Pumpkin, Snowflake, Christmas Tree, Pr
 - Show Card item stores a show so it can be copied between controllers. Loop, start on redstone, start by command.
 - Staff command `/fireworks show start|stop <name>` for server events (New Year, launch day).
 
+## Automation (1.0.1)
+Asked for by players running Create and CC: Tweaked packs. Every part has its own switch in `features.toml` `[automation]`.
+- **Launcher pipes** (`launcher_pipes`): item handler capability on the Launcher. Insert only, rockets only, nothing extracted. Slot memory: each slot remembers the last rocket put in it (by a player or a pipe, saved with the block). A piped rocket goes to the first slot that remembers the same rocket and has room, otherwise the first empty slot that remembers nothing. Shows rely on slot numbers, so slots are never mixed. Clear Slot Memory button (menu button 11) forgets the empty slots.
+- **Workbench copying** (`workbench_copying`): the Firework Workbench gets a block entity: a template rocket, paper / gunpowder / firework star stock and an output slot. Template set by sneak-right-click with a rocket, taken back (with the stock) by sneak-right-click with an empty hand; dropped when broken. Item handler: paper, gunpowder and stars in their own slot, output extract only, rockets never accepted. One copy every `[copying] workbench_ticks`. The designer screen is unchanged.
+- No clash: the workbench never takes rockets in and the launcher only takes rockets, so one pipe network can feed both.
+- **Copy recipe** (`copy_recipe`): custom crafting recipe `codex_fireworks:rocket_copy`. Rocket + `[copying]` paper, gunpowder and firework stars gives the rocket x2 (the original goes into the result, so Create's Mechanical Crafter, which doesn't hand back grid leftovers, works too).
+- **Create Deployer** (`create_deployer`): listens to Create's `DeployerRecipeSearchEvent` (only when Create is loaded). Held copyable rocket + plain rocket (no stars) on the belt or depot gives a deployer application recipe with the copy as result and the held rocket kept.
+- **CC: Tweaked** (`computercraft`): peripheral capability on Launcher (`firework_launcher`), Show Controller (`show_controller`) and Firework Workbench (`firework_workbench`), registered only when CC: Tweaked is loaded. Functions run on the server thread.
+- What can be copied: rockets with bursts, never a Mystery Rocket, only the rarities listed in `[copying] rarities` (default common; untagged rockets count as common).
+- Create (6.0.10) and CC: Tweaked (1.122.0 API) are compile-only dependencies; their classes are only touched when the mod is loaded.
+
 ## Recipes
 - Firework Workbench: crafting table + 4 paper + 4 gunpowder
 - Launcher: dispenser + iron ingots + gunpowder
@@ -91,6 +102,7 @@ Smiley, Star, Ghost, Sword, Crown, Skull, Pumpkin, Snowflake, Christmas Tree, Pr
 - Pattern Card: paper + any dye
 - Show Card: paper + redstone
 - Pattern Card copies: a drawn card + blank cards in a crafting grid
+- Rocket copies: a rocket + paper + gunpowder + firework star (amounts in `limits.toml` `[copying]`)
 - All recipes are datapack JSON, so servers can change them.
 - No mineable tags: the blocks mine like oak planks (workbench) or stone (launcher, controller) through code, so the right tool is faster and every tool drops them.
 
@@ -114,7 +126,7 @@ Smiley, Star, Ghost, Sword, Crown, Skull, Pumpkin, Snowflake, Christmas Tree, Pr
 - `pattern.hex` (custom hex colors), `give` (`/fireworks give`), `show.command`, `bypass` (edit anyone's launchers), `admin` (reload) — default OP 2/3
 
 ## Config `config/codex_fireworks/`
-- `features.toml` (master control file): master switch, one switch per shape, patterns, text mode, hex for everyone, shells, rocket presets, pattern presets, Mystery Rocket, rarity, shape sounds, launchers, shows, damage, claims, overlap guard + `force_on`
+- `features.toml` (master control file): master switch, one switch per shape, patterns, text mode, hex for everyone, shells, rocket presets, pattern presets, Mystery Rocket, rarity, shape sounds, launchers, shows, damage, claims, automation (launcher pipes, workbench copying, copy recipe, Create Deployer, CC: Tweaked), overlap guard + `force_on`
 - `limits.toml`: server limits above
 - `client.toml`: particle quality (client side)
 - `patterns/`: optional shared server patterns, one file per pattern (same idea as Armor Stands presets), loaded with `/fireworks reload`

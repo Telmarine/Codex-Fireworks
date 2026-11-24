@@ -1,10 +1,12 @@
 package com.tac5studios.codexfireworks;
 
+import com.tac5studios.codexfireworks.compat.create.CreateCompat;
 import com.tac5studios.codexfireworks.config.ClientConfig;
 import com.tac5studios.codexfireworks.config.Features;
 import com.tac5studios.codexfireworks.config.Limits;
 import com.tac5studios.codexfireworks.registry.ModBlockEntities;
 import com.tac5studios.codexfireworks.registry.ModBlocks;
+import com.tac5studios.codexfireworks.registry.ModCapabilities;
 import com.tac5studios.codexfireworks.registry.ModComponents;
 import com.tac5studios.codexfireworks.registry.ModItems;
 import com.tac5studios.codexfireworks.registry.ModMenus;
@@ -17,6 +19,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -41,7 +44,8 @@ import org.slf4j.LoggerFactory;
  *   client.*               particles, screens, tooltips, drawing the bursts
  *
  * <p>Registered here: blocks (Firework Workbench, Launcher, Show Controller), items (Pattern Card, Show Card),
- * block entities, menus, item data components, shape sounds, the Pattern Card copy recipe and the creative tab.
+ * block entities, menus, item data components, shape sounds, the copy recipes, the creative tab and the
+ * hopper/pipe item handlers. With CC: Tweaked: peripherals. With Create: the Deployer copy recipe.
  */
 @Mod(CodexFireworks.MOD_ID)
 public class CodexFireworks {
@@ -65,6 +69,8 @@ public class CodexFireworks {
         ModSounds.register(modBus);
         ModRecipes.register(modBus);
         ModTab.register(modBus);
+        modBus.addListener(ModCapabilities::register);
+        if (ModList.get().isLoaded("create")) CreateCompat.init();
         // config/codex_fireworks/features.toml, limits.toml, client.toml
         Features.register(container);
         Limits.register(container);

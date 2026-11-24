@@ -8,6 +8,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -27,10 +29,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.UUID;
 
@@ -38,6 +42,10 @@ import java.util.UUID;
  * Launcher: holds up to 9 stacks of firework rockets and fires them on a redstone pulse
  * (a volley of "count" rockets, "interval" ticks apart) or when a Show Controller cue says so.
  * Settings: direction (yaw), tilt (angle from straight up), random spread, count and interval.
+ *
+ * <p>Slot memory: every slot remembers the last rocket put in it. Hoppers and pipes put a rocket back into
+ * a slot that remembers the same rocket, and only use an empty slot that remembers nothing, so shows that
+ * fire from fixed slots keep working while the launcher is refilled. The Clear button forgets the empty slots.
  */
 public class LauncherBlockEntity extends BlockEntity implements MenuProvider {
 
@@ -49,6 +57,7 @@ public class LauncherBlockEntity extends BlockEntity implements MenuProvider {
         @Override
         public void setChanged() {
             super.setChanged();
+            remember();
             LauncherBlockEntity.this.setChanged();
         }
 
@@ -57,6 +66,10 @@ public class LauncherBlockEntity extends BlockEntity implements MenuProvider {
             return stack.is(Items.FIREWORK_ROCKET);
         }
     };
+
+    /** The rocket each slot last held (count 1), or empty. */
+    private final ItemStack[] memory = new ItemStack[SLOTS];
+    private final IItemHandler pipes = new Pipes();
 
     private int yaw = 0, angle = 0, spread = 0, count = 1, interval = 10;
     private int nextSlot = 0;
@@ -101,6 +114,7 @@ public class LauncherBlockEntity extends BlockEntity implements MenuProvider {
 
     public LauncherBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.LAUNCHER.get(), pos, state);
+        Arrays.fill(memory, ItemStack.EMPTY);
     }
 
     public SimpleContainer items() {
@@ -119,7 +133,7 @@ public class LauncherBlockEntity extends BlockEntity implements MenuProvider {
 
     // ---- settings (changed by the menu buttons) ----
 
-    /** Button ids: 0/1 direction -/+, 2/3 tilt, 4/5 spread, 6/7 count, 8/9 interval, 10 test shot. */
+    /** Button ids: 0/1 direction -/+, 2/3 tilt, 4/5 spread, 6/7 count, 8/9 interval, 10 test shot, 11 clear slot memory. */
     public void button(int id, boolean big) {
         int minInterval = Limits.MIN_INTERVAL.get();
         switch (id) {
@@ -134,10 +148,119 @@ public class LauncherBlockEntity extends BlockEntity implements MenuProvider {
             case 8 -> interval = Math.max(minInterval, interval - (big ? 10 : 1));
             case 9 -> interval = Math.min(100, interval + (big ? 10 : 1));
             case 10 -> fire(-1, 0);
+            case 11 -> clearSlotMemory();
             default -> { }
         }
         interval = Math.max(minInterval, interval);
         setChanged();
+    }
+
+    /** One setting (YAW, ANGLE, SPREAD, COUNT, INTERVAL). */
+    public int setting(int i) {
+        return data.get(i);
+    }
+
+    /** Set one setting, kept inside the same ranges as the buttons. */
+    public void setSetting(int i, int v) {
+        switch (i) {
+            case YAW -> yaw = Math.floorMod(v, 360);
+            case ANGLE -> angle = Mth.clamp(v, 0, 60);
+            case SPREAD -> spread = Mth.clamp(v, 0, 30);
+            case COUNT -> count = Mth.clamp(v, 1, 9);
+            case INTERVAL -> interval = Mth.clamp(v, Limits.MIN_INTERVAL.get(), 100);
+            default -> { }
+        }
+        setChanged();
+    }
+
+    // ---- slot memory ----
+
+    /** Every filled slot remembers its rocket. */
+    private void remember() {
+        for (int i = 0; i < SLOTS; i++) {
+            ItemStack s = items.getItem(i);
+            if (!s.isEmpty() && !ItemStack.isSameItemSameComponents(s, memory[i])) memory[i] = s.copyWithCount(1);
+        }
+    }
+
+    /** Forget what the empty slots held. Filled slots keep remembering their rocket. */
+    public void clearSlotMemory() {
+        Arrays.fill(memory, ItemStack.EMPTY);
+        remember();
+        setChanged();
+    }
+
+    /** The rocket this slot remembers (empty when none). */
+    public ItemStack remembered(int slot) {
+        return memory[slot];
+    }
+
+    /**
+     * Where a piped rocket goes: the first slot that remembers the same rocket and has room,
+     * else the first empty slot that remembers nothing. -1 when there's no place for it.
+     */
+    public int slotFor(ItemStack stack) {
+        if (!stack.is(Items.FIREWORK_ROCKET)) return -1;
+        for (int i = 0; i < SLOTS; i++) {
+            ItemStack in = items.getItem(i);
+            if (ItemStack.isSameItemSameComponents(memory[i], stack)
+                    && (in.isEmpty() || (ItemStack.isSameItemSameComponents(in, stack) && in.getCount() < in.getMaxStackSize()))) return i;
+        }
+        for (int i = 0; i < SLOTS; i++) {
+            if (items.getItem(i).isEmpty() && memory[i].isEmpty()) return i;
+        }
+        return -1;
+    }
+
+    /** Item handler for hoppers and pipes: rockets in by slot memory, nothing out. */
+    public IItemHandler pipes() {
+        return pipes;
+    }
+
+    private final class Pipes implements IItemHandler {
+
+        @Override
+        public int getSlots() {
+            return SLOTS;
+        }
+
+        @Override
+        public @NotNull ItemStack getStackInSlot(int slot) {
+            return items.getItem(slot);
+        }
+
+        /** Only the slot that slot memory picks takes the rocket; callers try every slot in turn. */
+        @Override
+        public @NotNull ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
+            if (stack.isEmpty() || !isItemValid(slot, stack)) return stack;
+            ItemStack in = items.getItem(slot);
+            int room = stack.getMaxStackSize() - in.getCount();
+            int moved = Math.min(room, stack.getCount());
+            if (moved <= 0) return stack;
+            if (!simulate) {
+                if (in.isEmpty()) items.setItem(slot, stack.copyWithCount(moved));
+                else {
+                    in.grow(moved);
+                    items.setChanged();
+                }
+            }
+            return stack.copyWithCount(stack.getCount() - moved);
+        }
+
+        @Override
+        public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 64;
+        }
+
+        @Override
+        public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+            return Features.on(Feature.LAUNCHERS) && Features.on(Feature.LAUNCHER_PIPES) && slotFor(stack) == slot;
+        }
     }
 
     // ---- firing ----
@@ -237,6 +360,14 @@ public class LauncherBlockEntity extends BlockEntity implements MenuProvider {
         tag.putInt("NextSlot", nextSlot);
         tag.putBoolean("Powered", powered);
         if (owner != null) tag.putUUID("Owner", owner);
+        ListTag mem = new ListTag();
+        for (int i = 0; i < SLOTS; i++) {
+            if (memory[i].isEmpty()) continue;
+            CompoundTag t = new CompoundTag();
+            t.putByte("Slot", (byte) i);
+            mem.add(memory[i].save(registries, t));
+        }
+        tag.put("SlotMemory", mem);
     }
 
     @Override
@@ -253,6 +384,13 @@ public class LauncherBlockEntity extends BlockEntity implements MenuProvider {
         nextSlot = tag.getInt("NextSlot");
         powered = tag.getBoolean("Powered");
         owner = tag.hasUUID("Owner") ? tag.getUUID("Owner") : null;
+        Arrays.fill(memory, ItemStack.EMPTY);
+        for (Tag t : tag.getList("SlotMemory", Tag.TAG_COMPOUND)) {
+            CompoundTag c = (CompoundTag) t;
+            int i = c.getByte("Slot");
+            if (i >= 0 && i < SLOTS) memory[i] = ItemStack.parse(registries, c).orElse(ItemStack.EMPTY);
+        }
+        remember(); // launchers from before slot memory remember what they hold
     }
 
     // ---- menu ----

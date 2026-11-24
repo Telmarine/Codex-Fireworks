@@ -32,6 +32,13 @@ public final class Limits {
     // [patterns]
     public static final IntValue MAX_PATTERN_SPARKS;
 
+    // [copying]
+    public static final IntValue COPY_PAPER;
+    public static final IntValue COPY_GUNPOWDER;
+    public static final IntValue COPY_STARS;
+    public static final IntValue COPY_TICKS;
+    public static final ConfigValue<List<? extends String>> COPY_RARITIES;
+
     // [mystery]
     public static final ConfigValue<List<? extends String>> MYSTERY_POOL;
 
@@ -71,6 +78,17 @@ public final class Limits {
         b.push("patterns");
         MAX_PATTERN_SPARKS = b.comment("Most lit pixels (sparks) in one drawn pattern. The grid is 16x16 = 256.")
                 .defineInRange("max_sparks", 256, 16, 256);
+        b.pop();
+
+        b.comment("Copying rockets: the crafting recipe and the Firework Workbench template.").push("copying");
+        COPY_PAPER = b.comment("Paper one copy takes.").defineInRange("paper", 1, 0, 8);
+        COPY_GUNPOWDER = b.comment("Gunpowder one copy takes.").defineInRange("gunpowder", 1, 0, 8);
+        COPY_STARS = b.comment("Firework stars one copy takes.").defineInRange("firework_stars", 1, 0, 8);
+        COPY_TICKS = b.comment("Time a Firework Workbench takes to make one copy, in ticks (20 = 1 second).")
+                .defineInRange("workbench_ticks", 20, 1, 1200);
+        COPY_RARITIES = b.comment("Rocket rarities that can be copied: \"common\", \"rare\", \"epic\". Rockets without a tag count as common.",
+                        "Mystery Rockets can never be copied.")
+                .defineListAllowEmpty("rarities", List.of("common"), () -> "", o -> o instanceof String);
         b.pop();
 
         b.push("mystery");

@@ -47,7 +47,19 @@ public enum Feature {
     PLAYER_DAMAGE("rules", "player_damage", true,
             "Firework explosions hurt players (vanilla). Turn off to make fireworks harmless to players."),
     CLAIMS("rules", "claims", true,
-            "Respect claim mods (Elements: Claims, Open Parties and Claims, FTB Chunks) for launchers and controllers.");
+            "Respect claim mods (Elements: Claims, Open Parties and Claims, FTB Chunks) for launchers and controllers."),
+
+    // [automation]
+    LAUNCHER_PIPES("automation", "launcher_pipes", true,
+            "Hoppers and pipes can fill launchers. A rocket goes back to the slot that last held the same rocket."),
+    WORKBENCH_COPYING("automation", "workbench_copying", true,
+            "Sneak-right-click a Firework Workbench with a rocket to make it a template. Fed paper, gunpowder and firework stars, it makes copies."),
+    COPY_RECIPE("automation", "copy_recipe", true,
+            "Crafting recipe: a rocket with paper, gunpowder and a firework star gives the rocket back plus one copy."),
+    CREATE_DEPLOYER("automation", "create_deployer", true,
+            "Create: a Deployer holding a rocket copies it onto a plain firework rocket."),
+    COMPUTERCRAFT("automation", "computercraft", true,
+            "CC: Tweaked computers can control launchers, Show Controllers and Firework Workbenches.");
 
     public final String section;
     public final String key;

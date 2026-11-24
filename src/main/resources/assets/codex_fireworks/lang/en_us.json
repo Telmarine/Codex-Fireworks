@@ -116,6 +116,8 @@
   "gui.codex_fireworks.launcher.count": "Rockets",
   "gui.codex_fireworks.launcher.interval": "Interval",
   "gui.codex_fireworks.test_fire": "Test",
+  "gui.codex_fireworks.clear_memory": "Clear Slot Memory",
+  "gui.codex_fireworks.clear_memory_tip": "Each slot remembers the last rocket put in it, and hoppers and pipes refill it with that rocket only. This makes the empty slots forget theirs.",
 
   "gui.codex_fireworks.show_title": "Show Controller",
   "gui.codex_fireworks.show_name": "Show name",

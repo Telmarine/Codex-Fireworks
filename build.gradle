@@ -13,10 +13,23 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 repositories {
     mavenCentral()
+    // Create (optional: Deployer copy recipe)
+    maven {
+        url = 'https://maven.createmod.net'
+        content { includeGroup 'com.simibubi.create' }
+    }
+    // CC: Tweaked (optional: peripherals), only published on Modrinth
+    maven {
+        url = 'https://api.modrinth.com/maven'
+        content { includeGroup 'maven.modrinth' }
+    }
 }
 
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
+    // Optional mods: only compiled against, never needed at runtime.
+    compileOnly("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
+    compileOnly "maven.modrinth:cc-tweaked:${cc_version}"
 }
 
 tasks.withType(ProcessResources).configureEach {

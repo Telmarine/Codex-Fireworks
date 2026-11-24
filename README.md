@@ -2,7 +2,7 @@
 
 ![Minecraft](https://img.shields.io/badge/Minecraft-1.21.1-62B47A?style=for-the-badge) ![NeoForge](https://img.shields.io/badge/NeoForge-21.1.x-E68A2E?style=for-the-badge) ![Environment](https://img.shields.io/badge/Environment-Client%20%26%20Server-5865F2?style=for-the-badge) ![Type](https://img.shields.io/badge/Type-Quality%20of%20Life-8A2BE2?style=for-the-badge) [![Source](https://img.shields.io/badge/Source-GitHub-181717?style=for-the-badge&logo=github)](https://github.com/Telmarine/Codex-Fireworks)
 
-A firework mod for NeoForge 1.21.1. It adds new burst shapes, rockets that pop into formations of up to 8 bursts (each with its own offset and delay), drawn patterns, launchers and timed shows. Install it on both the server and the client.
+A firework mod for NeoForge 1.21.1. It adds new burst shapes, rockets that pop into formations of up to 8 bursts (each with its own offset and delay), drawn patterns, launchers and timed shows, with hopper/pipe, Create and CC: Tweaked support. Install it on both the server and the client.
 
 Rockets made by this mod are normal vanilla firework rockets with extra data. They also carry plain vanilla stars, so if the mod is turned off or removed they still fly and pop like any other rocket.
 
@@ -101,6 +101,7 @@ Crafted from a dispenser, 7 iron ingots and 1 gunpowder. Load up to 9 stacks of 
 - A redstone pulse fires a volley: the number of rockets set in the screen, the interval apart.
 - Settings: direction, tilt (0 = straight up), random spread, rockets per pulse and interval. Test fires one rocket.
 - `min_interval_ticks` in `limits.toml` is the shortest time between two shots of one launcher.
+- Hoppers and pipes can fill it with rockets (nothing is ever pulled out). Each slot remembers the last rocket put in it, and a piped rocket only goes into a slot that remembers the same rocket, or into an empty slot that remembers nothing. Shows that fire from set slots keep working while the launcher is refilled. **Clear Slot Memory** makes the empty slots forget their rocket.
 
 ## Show Controller
 
@@ -113,6 +114,36 @@ Crafted from a launcher, a clock and 4 redstone.
 - `limits.toml` sets the most launchers per controller, cues per show and shows running near each other.
 
 Launchers and controllers belong to the player who placed them. Only that player, the owner of the land (Elements: Claims, Open Parties and Claims or FTB Chunks, if installed) and staff with `fireworks.bypass` can change them. `claims = false` under `[rules]` turns the land owner check off.
+
+## Copying rockets
+
+Copies cost paper, gunpowder and firework stars (`limits.toml` `[copying]`, 1 of each by default). Mystery Rockets can't be copied, and by default only common rockets can (`[copying] rarities`).
+
+- **Crafting:** a rocket with the paper, gunpowder and firework stars gives two of that rocket: the original and one copy. This also works in Create's Mechanical Crafter.
+- **Firework Workbench:** sneak-right-click it with a rocket to make that rocket its template. Hoppers and pipes put paper, gunpowder and firework stars in, and take the copies out (one copy every `[copying] workbench_ticks`). Sneak-right-click with an empty hand to take back the template and everything inside. Breaking the workbench drops them too. The workbench never takes rockets from a pipe, so the same pipe line can feed workbenches and launchers.
+- **Create Deployer:** a Deployer holding a rocket, pressing onto a plain firework rocket (paper + gunpowder, no stars), turns it into a copy and keeps the held rocket.
+
+## CC: Tweaked
+
+With CC: Tweaked installed, these blocks are peripherals:
+
+| Peripheral | Functions |
+| --- | --- |
+| `firework_launcher` | `fire([slot])`, `volley()`, `getRockets()`, `getRocketCount()`, `clearSlotMemory()`, `getSettings()`, `setDirection(deg)`, `setTilt(deg)`, `setSpread(deg)`, `setCount(n)`, `setInterval(ticks)` |
+| `show_controller` | `startShow()`, `stopShow()`, `isRunning()`, `getName()`, `getShow()`, `getLaunchers()` |
+| `firework_workbench` | `getTemplate()`, `getStock()`, `canCopy()` |
+
+Slots are 1-9. Settings use the same ranges as the launcher screen.
+
+```lua
+local launcher = peripheral.find("firework_launcher")
+launcher.setTilt(15)
+launcher.fire(1)
+```
+
+## Automation switches
+
+`features.toml` `[automation]`: `launcher_pipes`, `workbench_copying`, `copy_recipe`, `create_deployer` and `computercraft`. All on by default. Create and CC: Tweaked are optional; the mod works without them.
 
 ## Size
 
@@ -150,8 +181,8 @@ Bigger bursts use more particles. Players on slower PCs can lower `quality` in t
 
 `config/codex_fireworks/`
 
-- `features.toml`: master switch, one switch per shape and per feature, the firework damage switch and the overlap guard
-- `limits.toml`: burst and spark size for every rocket (`[display] burst_scale`, `spark_scale`), most bursts per rocket, longest delay, furthest offset, workbench preset cost, most lit pixels per pattern, the Mystery Rocket pool, and the launcher and show limits
+- `features.toml`: master switch, one switch per shape and per feature, the firework damage switch, the automation switches and the overlap guard
+- `limits.toml`: burst and spark size for every rocket (`[display] burst_scale`, `spark_scale`), most bursts per rocket, longest delay, furthest offset, workbench preset cost, copy cost, time and rarities, most lit pixels per pattern, the Mystery Rocket pool, and the launcher and show limits
 - `messages.toml`: every message, `&` colors
 - `patterns/`: the server's own patterns, one file each
 - `client.toml` (each player's own): particle quality (FULL, REDUCED, MINIMAL), most sparks per burst, most sparks on screen at once, volume

@@ -29,6 +29,12 @@ blank_card = "{prefix}&cOne of the Pattern Cards is blank. Draw on it first."
 too_many = "{prefix}&cA rocket can hold up to &e{max} &cbursts on this server."
 shape_off = "{prefix}&cThe shape &e{shape} &cis turned off on this server."
 crafted = "{prefix}&7Made &e{rocket} &7with &e{bursts} &7burst(s)."
+template_set = "{prefix}&7Template set: &e{rocket}&7. Feed this workbench paper, gunpowder and firework stars to make copies."
+has_template = "{prefix}&cThis workbench already copies &e{rocket}&c. Sneak-right-click with an empty hand to take it back."
+template_taken = "{prefix}&7Took back the template and everything in the workbench."
+no_template = "{prefix}&7No template. Sneak-right-click with a rocket to set one."
+not_copyable = "{prefix}&cThat rocket can't be copied."
+copying_off = "{prefix}&cCopying rockets is turned off on this server."
 
 [pattern]
 off = "{prefix}&cDrawn patterns are turned off on this server."
