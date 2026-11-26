@@ -32,6 +32,7 @@ import net.minecraft.world.item.component.FireworkExplosion;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -316,10 +317,12 @@ public class WorkbenchScreen extends AbstractContainerScreen<WorkbenchMenu> {
     }
 
     @Override
-    protected void slotClicked(@NotNull Slot slot, int id, int button, @NotNull ClickType type) {
-        if (slot.container == menu.container() && slot.getContainerSlot() >= WorkbenchMenu.FIRST_BURST) {
+    protected void slotClicked(@Nullable Slot slot, int id, int button, @NotNull ClickType type) {
+        if (slot != null && slot.container == menu.container() && slot.getContainerSlot() >= WorkbenchMenu.FIRST_BURST) {
             selected = slot.getContainerSlot() - WorkbenchMenu.FIRST_BURST;
         }
+        // Minecraft passes a null slot for clicks outside the window.
+        //noinspection DataFlowIssue
         super.slotClicked(slot, id, button, type);
     }
 
